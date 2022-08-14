@@ -9,7 +9,7 @@ const winCombos = [
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [6, 4, 2]
+    [2, 4, 6]
 ]
 
 const cells = document.querySelectorAll('.cell');
@@ -27,7 +27,11 @@ function startGame() {
 }
 
 function turnClick(square) {
-    turn(square.target.id, huPlayer);
+    if (typeof origBoard[square.target.id] == 'number') {
+
+        turn(square.target.id, huPlayer);
+        if (!checkTie()) turn(bestSpot(), aiPlayer)
+    }
 }
 
 function turn(squareId, player) {
@@ -56,5 +60,75 @@ function gameOver(gameWon) {
     for (var i = 0; i < cells.length; i++) {
         cells[i].removeEventListener('click', turnClick, false);
     }
+    declareWinner(gameWon.player == huPlayer ? "You Win" : "You lose.");
+}
 
+function declareWinner(who) {
+    document.querySelector(".endGame").style.display = "block";
+    document.querySelector(".endGame .text").innerText = who;
+}
+
+function emptySquares() {
+    return origBoard.filter(s => typeof s == 'number');
+}
+
+function bestSpot() {
+    return minimax(origBoard, aiPlayer).index;
+}
+
+function checkTie() {
+    if (emptySquares().length == 0) {
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].style.backgroundColor = "green";
+            cells[i].removeEventListener('click', turnClick, false);
+        }
+        declareWinner("Tie Game!");
+        return true;
+    }
+    return false;
+}
+
+function minimax(newBoard, player) {
+    var avaliSpots = emptySquares(newBoard)
+    if (checkWin(newBoard, player)) {
+        return { score: -10 };
+    } else if (checkWin(newBoard, aiPlayer)) {
+        return { score: 10 };
+    } else if (avaliSpots.length === 0) {
+        return { score: 0 };
+    }
+    var moves = [];
+    for (var i = 0; i < avaliSpots.length; i++) {
+        var move = {};
+        move.index = newBoard[avaliSpots[i]];
+        newBoard[avaliSpots[i]] = player;
+        if (player == aiPlayer) {
+            var result = minimax(newBoard, huPlayer);
+            move.score = result.score;
+        } else {
+            var result = minimax(newBoard, aiPlayer);
+            move.score = result.score;
+        }
+        newBoard[avaliSpots[i]] = move.index;
+        moves.push(move);
+    }
+    var bestMove;
+    if (player === aiPlayer) {
+        var bestScore = -100;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score > bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    } else {
+        var bestScore = 100;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score < bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+    return moves[bestMove]
 }
