@@ -1,0 +1,48 @@
+body {
+    background-image: url("../assets/tic-tac.jpg");
+    background-size: cover;
+    height: 500px;
+
+}
+
+nav {
+    margin: 0 .9px 0 .9px;
+    border-radius: 5px;
+}
+
+nav #topNav {
+    border-radius: 50px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+}
+
+nav #botumNav {
+
+    border-collapse: collapse;
+    border-radius: 50px;
+    border: solid white 2px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+}
+
+.navbar-brand {
+    justify-content: center;
+}
+
+
+.card {
+    margin-top: 100px;
+    opacity: .66;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.card-text {
+
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(3, 0, 0);
+
+}
