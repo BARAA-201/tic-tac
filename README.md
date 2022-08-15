@@ -1,7 +1,7 @@
 
 # Hello dear coder
 
-### In this project, I creat a Tic-Tac-Toe game. A humen player vs AI.  
+### In this project, I create a Tic-Tac-Toe game. A humen player vs AI.  
 
 #### I've bulid it using JavaScript and minimax algorithm.
 
