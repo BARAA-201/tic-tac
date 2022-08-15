@@ -17,7 +17,7 @@ const cells = document.querySelectorAll('.cell');
 startGame();
 
 function startGame() {
-    document.querySelector(".endGame").style.display = "none";
+    document.querySelector(".alert").style.display = "none";
     origBoard = Array.from(Array(9).keys());
     for (var i = 0; i < cells.length; i++) {
         cells[i].innerText = '';
@@ -64,8 +64,9 @@ function gameOver(gameWon) {
 }
 
 function declareWinner(who) {
-    document.querySelector(".endGame").style.display = "block";
-    document.querySelector(".endGame .text").innerText = who;
+    document.querySelector(".alert").style.display = "block";
+    document.querySelector(".alert .text").innerText = who;
+
 }
 
 function emptySquares() {
@@ -79,7 +80,7 @@ function bestSpot() {
 function checkTie() {
     if (emptySquares().length == 0) {
         for (var i = 0; i < cells.length; i++) {
-            cells[i].style.backgroundColor = "green";
+            cells[i].style.backgroundColor = "#FFFF8A";
             cells[i].removeEventListener('click', turnClick, false);
         }
         declareWinner("Tie Game!");
