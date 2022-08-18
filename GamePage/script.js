@@ -10,6 +10,7 @@ const winCombos = [
     [2, 5, 8],
     [0, 4, 8],
     [2, 4, 6]
+
 ]
 
 const cells = document.querySelectorAll('.cell');
@@ -78,7 +79,7 @@ function bestSpot() {
 }
 
 function checkTie() {
-    if (emptySquares().length == 0) {
+    if (emptySquares().length === 0) {
         for (var i = 0; i < cells.length; i++) {
             cells[i].style.backgroundColor = "#FFFF8A";
             cells[i].removeEventListener('click', turnClick, false);
@@ -92,9 +93,9 @@ function checkTie() {
 function minimax(newBoard, player) {
     var avaliSpots = emptySquares(newBoard)
     if (checkWin(newBoard, player)) {
-        return { score: -10 };
+        return { score: -100 };
     } else if (checkWin(newBoard, aiPlayer)) {
-        return { score: 10 };
+        return { score: 100 };
     } else if (avaliSpots.length === 0) {
         return { score: 0 };
     }
@@ -115,7 +116,7 @@ function minimax(newBoard, player) {
     }
     var bestMove;
     if (player === aiPlayer) {
-        var bestScore = -100;
+        var bestScore = -10000;
         for (var i = 0; i < moves.length; i++) {
             if (moves[i].score > bestScore) {
                 bestScore = moves[i].score;
@@ -123,7 +124,7 @@ function minimax(newBoard, player) {
             }
         }
     } else {
-        var bestScore = 100;
+        var bestScore = 10000;
         for (var i = 0; i < moves.length; i++) {
             if (moves[i].score < bestScore) {
                 bestScore = moves[i].score;
